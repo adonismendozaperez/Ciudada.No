@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Ciudada.No</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+    <style>
+        #section1 {padding-top:50px;height:418px;color: #fff; background-color: white;}
+        #section2 {padding-top:50px;height:193px;color: #fff; background-color: #9be29b;}
+        .navbar{
+            background-color: white;
+        }
+        a{
+            color: white;
+            background-color: #9be29b;
+        }
+        a:hover{
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="text-center mt-3">
+            <img src="../Imagenes/ciudada.no-icono.png" style="width: 200px;" class="rounded" alt="...">
+    </div>
+    <!-- CONTAINER -->
+    <div id="section1" class="container-fluid">
+        <div class="row">
+            <div class="col-sm"></div>
+
+            <div class="col-sm">
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Registrarse</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <form class="mt-3">
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese su Email">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Ingrese su contraseña">
+                                    </div>
+                                    <button type="submit" class="btn" style="background-color: #9be29b; color: white">Login</button>
+                                </form>
+                        </div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <form class="mt-3">
+                                <div class="form-group">
+                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese su Email">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Ingrese su contraseña">
+                                </div>
+                                <button type="submit" class="btn" style="background-color: #9be29b; color: white">Crear</button>
+                            </form>
+                        </div>
+                </div>
+            </div>
+            
+            <div class="col-sm"></div>
+        </div>
+    </div>
+
+    <div id="section2" class="container-fluid">
+    </div>    
+</body>
+</html>

@@ -24,8 +24,8 @@
     <nav class="navbar navbar-light justify-content-between">
             <a class="navbar-brand"></a>
             <form class="form-inline">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
-              <button class="btn btn-outline-success my-2 my-sm-0" style="margin-left: 10px;" type="submit">Registrarse</button>
+              <button class="btn btn-outline-success my-2 my-sm-0 btnlogin" type="submit">Login</button>
+              <button class="btn btn-outline-success my-2 my-sm-0 btnregistrar" style="margin-left: 10px;" type="submit">Registrarse</button>
             </form>
     </nav>
     <!-- CONTAINER -->
@@ -36,6 +36,13 @@
     </div>
 
     <div id="section2" class="container-fluid">
-    </div>    
+    </div>   
+    
+    <script>
+        document.querySelector('.btnlogin').addEventListener('click',()=>{
+            window.location.href =  'file:///C:/Users/Dell/Desktop/Ciudada.No/Login/Login.html';
+        })
+        
+    </script>    
 </body>
 </html>
