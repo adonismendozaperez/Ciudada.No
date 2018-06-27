@@ -47,6 +47,7 @@
             alert("Done");
             $("#LoginInputEmail").val("");
             $("#LoginInputPassword").val("");
+            location.href = "Dashboard.html";
         })
         .catch(function(error) {
             // Handle Errors here.

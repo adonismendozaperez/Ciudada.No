@@ -11,7 +11,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <style>
         #section1 {padding-top:50px;height:580px;color: #fff; background-color: white;}
-        #section2 {padding-top:50px;height:193px;color: #fff; background-color: #1f671f;}
+        #section2 {padding-top:50px;height:119px;color: #fff; background-color: #1f671f;}
         .navbar{
             background-color: white;
         }
@@ -37,10 +37,15 @@
     </div>   
     
     <script>
-        document.querySelector('.btnlogin').addEventListener('click',()=>{
-            window.location.href =  './Login/Login.html';
+        $(".btnlogin").click((e)=>{
+            e.preventDefault();
+            location.href = 'Login.html';
         })
-        
+
+        $(".btnregistrar").click((e)=>{
+            e.preventDefault();
+            location.href = 'Login.html';
+        })
     </script>    
 </body>
 </html>
