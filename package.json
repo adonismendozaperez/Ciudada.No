@@ -1,0 +1,19 @@
+{
+  "name": "ciudada.no",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adonismendozaperez/Ciudada.No.git"
+  },
+  "author": "ADONIS MENDOZA PEREZ",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adonismendozaperez/Ciudada.No/issues"
+  },
+  "homepage": "https://github.com/adonismendozaperez/Ciudada.No#readme"
+}

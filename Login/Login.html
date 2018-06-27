@@ -9,17 +9,28 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
+    <script>
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyAphHJJBP2HpPNynnQgZ66GkAr23wtLEiA",
+                authDomain: "ciudada-no.firebaseapp.com",
+                databaseURL: "https://ciudada-no.firebaseio.com",
+                projectId: "ciudada-no",
+                storageBucket: "ciudada-no.appspot.com",
+                messagingSenderId: "896456539633"
+            };
+            firebase.initializeApp(config);
+            </script>
     <style>
         #section1 {padding-top:50px;height:418px;color: #fff; background-color: white;}
-        #section2 {padding-top:50px;height:193px;color: #fff; background-color: #9be29b;}
+        #section2 {padding-top:50px;height:193px;color: #fff; background-color: #1f671f;}
         .navbar{
             background-color: white;
         }
         a{
             color: white;
-            background-color: #9be29b;
+            background-color: #1f671f;
         }
         a:hover{
             color: white;
@@ -49,33 +60,35 @@
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <form class="mt-3">
                                     <div class="form-group">
-                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese su Email">
+                                        <input type="email" class="form-control" id="LoginInputEmail" aria-describedby="emailHelp" placeholder="Ingrese su Email">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Ingrese su contraseña">
+                                        <input type="password" class="form-control" id="LoginInputPassword" placeholder="Ingrese su contraseña">
                                     </div>
-                                    <button type="submit" class="btn" style="background-color: #9be29b; color: white">Login</button>
+                                    <button type="submit" class="btn btnIniciarSesion" style="background-color: #1f671f; color: white">Iniciar Sesión</button>
                                 </form>
                         </div>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                             <form class="mt-3">
                                 <div class="form-group">
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese su Email">
+                                    <input type="email" class="form-control" id="RegistroInputEmail" aria-describedby="emailHelp" placeholder="Ingrese su Email">
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Ingrese su contraseña">
+                                    <input type="password" class="form-control" id="RegistroInputPassword" placeholder="Ingrese su contraseña">
                                 </div>
-                                <button type="submit" class="btn" style="background-color: #9be29b; color: white">Crear</button>
+                                <button type="submit" class="btn btnCrear" style="background-color: #1f671f; color: white">Crear</button>
                             </form>
                         </div>
                 </div>
             </div>
-            
+
             <div class="col-sm"></div>
         </div>
     </div>
 
     <div id="section2" class="container-fluid">
-    </div>    
+    </div> 
+    
+    <script src="Login.js"></script>
 </body>
 </html>
