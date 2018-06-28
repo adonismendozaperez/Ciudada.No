@@ -8,13 +8,10 @@
     
          firebase.auth().createUserWithEmailAndPassword(user, pass)
          .then(function(){
-             alert("Registrado!")
-            //CLEAN FIELD
             $("#RegistroInputEmail").val("");
             $("#RegistroInputPassword").val("");
          })
          .catch(function(error) {
-             // Handle Errors here.
              var errorCode = error.code;
              var errorMessage = error.message;
              if (errorCode == 'auth/weak-password') {
@@ -69,13 +66,11 @@
 
         firebase.auth().signInWithEmailAndPassword(user, pass)
         .then(()=>{
-            alert("Done");
             $("#LoginInputEmail").val("");
             $("#LoginInputPassword").val("");
             location.href = "Dashboard.html";
         })
         .catch(function(error) {
-            // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
             if (errorCode === 'auth/wrong-password') {
@@ -105,8 +100,5 @@
             console.log(error);
         });
     });
-
-
-
-
+    
 })();

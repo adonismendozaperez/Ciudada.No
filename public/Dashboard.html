@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Dashboard | Ciudada.No</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyAphHJJBP2HpPNynnQgZ66GkAr23wtLEiA",
+            authDomain: "ciudada-no.firebaseapp.com",
+            databaseURL: "https://ciudada-no.firebaseio.com",
+            projectId: "ciudada-no",
+            storageBucket: "ciudada-no.appspot.com",
+            messagingSenderId: "896456539633"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <style>
+        #section1 {
+            padding-top: 50px;
+            height: 687px;
+            color: #fff;
+            background-color: white;
+        }
+        #section2 {
+            padding-top: 50px;
+            height: 70px;
+            color: #fff;
+            background-color: #1f671f;
+        }
+        label, h4{
+            color: rgba(0,0,0,.5);
+        }
+        .display-4{
+            font-size: 2.5rem !important;
+        }
+    </style>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="Dashboard.js"></script>
+</head>
+
+<body>
+    <!-- NAVBAR-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="Dashboard.html">Ciudada.No</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="Dashboard.html">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Dashboard.html">Estadisticas</a>
+                </li>
+            </ul>
+            <span class="navbar-text">
+                    <button class="btn btn-outline-success my-2 my-sm-0 btnSalir"  style="margin-left: 10px;" type="submit">Salir</button>
+            </span>
+        </div>
+    </nav>
+    <!-- CONTAINER -->
+    <div id="section1" class="container-fluid">
+        <div class="row">
+            <div class="col-sm"></div>
+            <div class="col-sm">
+                    <h4 class="display-4">Reporte de problematicas.</h4>
+                <form>
+                    <!--TIPO DE PROBLEMATICAS-->
+                    <label for="inputTipoProblematica">Tipo de problematica</label>
+                    <select class="form-control" id="inputTipoProblematica">
+                        <option>Bullying</option>
+                        <option>Contaminación</option>
+                        <option>Delincuencia</option>
+                        <option>Electricidad</option>
+                        <option>Otros</option>
+                        <option>Racismo</option>
+                        <option>Violencia de Genero</option>
+                    </select>
+                    <!--FECHA-->
+                    <div class="form-group">
+                        <label for="inputFecha">Fecha</label>
+                        <input type="date" class="form-control" id="inputFecha" placeholder="name@example.com">
+                    </div>
+                    <!--lONGITUD, LATITUD -->
+                    <fieldset disabled>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <input type="text" class="form-control" id="inputLogintud" placeholder="Logintud">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="text" class="form-control" id="inputLatitud" placeholder="Latitud">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <!--INPUT COMENTARIO-->
+                    <div class="form-group">
+                      <label for="inputComentario">Comentario</label>
+                      <textarea class="form-control" id="inputComentario" rows="3"></textarea>
+                    </div>
+                    <!--INPUT EVIDENCIAS-->
+                    <label for="customFile">Evidencias</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="customFile">
+                        <label class="custom-file-label" ></label>
+                    </div>
+                    <!--INPUT ESTATUS-->
+                    <label for="inputEstatus">Estatus</label>
+                    <select class="form-control" id="inputEstatus">
+                        <option>Pendiente</option>
+                    </select>
+                    <!--INPUT ENVIAR-->
+                    <div class="form-group mt-3">
+                        <button type="button" class="btn btn-secondary btn-lg btn-block" id="btnEnviarProblematica">Enviar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm"></div>
+        </div>    
+    </div>
+
+    <div id="section2" class="container-fluid"></div>
+
+    <script>
+    $("#btnEnviarProblematica").click(()=>{
+         let tipo = $("#inputTipoProblematica").val();
+         let fecha = $("#inputFecha").val();
+         let longitud = $("#inputLogintud").val();
+         let latitud = $("#inputLatitud").val();
+         let comentario = $("#inputComentario").val();
+         let estatus = $("#inputEstatus").val();
+
+         let obj = {
+             Tipo : tipo,
+             Fecha : fecha,
+             Longitud : longitud,
+             Latitud : latitud,
+             Comentario : comentario,
+             Estatus : estatus
+          }
+
+          firebase.database().ref("Problematicas").push(obj);
+          swal("Save!", "Datos Guardados correctamente!", "success");
+            $("#inputTipoProblematica").val("");
+            $("#inputFecha").val("");
+            $("#inputLogintud").val("");
+            $("#inputLatitud").val("");
+            $("#inputComentario").val("");
+            $("#inputEstatus").val("");
+    });
+    </script>
+</body>
+</html>
