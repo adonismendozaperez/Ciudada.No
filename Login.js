@@ -18,19 +18,44 @@
              var errorCode = error.code;
              var errorMessage = error.message;
              if (errorCode == 'auth/weak-password') {
-                alert('The password is too weak.');
+                swal({
+                    title: "Informacion!",
+                    text: "The password is too weak.!",
+                    icon: "warning",
+                    button: "Okey!",
+                  });
               }
               else if(errorCode == 'auth/email-already-in-use'){
-                alert('This acount already in use.');
+                swal({
+                    title: "Informacion!",
+                    text: "This acount already in use!",
+                    icon: "warning",
+                    button: "Okey!",
+                  });
               }
               else if(errorCode == 'auth/invalid-email'){
-                alert('The email address is not valid.');
+                swal({
+                    title: "Informacion!",
+                    text: "The email address is not valid!",
+                    icon: "warning",
+                    button: "Okey!",
+                  });
               }
               else if(errorCode == 'auth/weak-password'){
-                alert('The password is not strong enough.');
+                swal({
+                    title: "Informacion!",
+                    text: "The password is not strong enough!",
+                    icon: "warning",
+                    button: "Okey!",
+                  });
               }
               else{
-                alert(errorMessage);
+                swal({
+                    title: "Informacion!",
+                    text: errorMessage,
+                    icon: "warning",
+                    button: "Okey!",
+                  });
               }
 
            });
@@ -54,9 +79,28 @@
             var errorCode = error.code;
             var errorMessage = error.message;
             if (errorCode === 'auth/wrong-password') {
-                alert('Wrong password.');
-            } else {
-                alert(errorMessage);
+                swal({
+                    title: "Informacion!",
+                    text: "Wrong password",
+                    icon: "warning",
+                    button: "Okey!",
+                  });
+            }
+            else if(errorCode === 'auth/invalid-email'){
+                swal({
+                    title: "Informacion!",
+                    text: "The email address is badly formatted.",
+                    icon: "warning",
+                    button: "Okey!",
+                  });
+            }
+            else {
+                swal({
+                    title: "Informacion!",
+                    text: errorMessage,
+                    icon: "warning",
+                    button: "Okey!",
+                  });
             }
             console.log(error);
         });

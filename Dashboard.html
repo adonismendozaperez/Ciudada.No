@@ -30,19 +30,23 @@
   <style>
         #section1 {
             padding-top: 50px;
-            height: 580px;
+            height: 687px;
             color: #fff;
             background-color: white;
         }
 
         #section2 {
             padding-top: 50px;
-            height: 193px;
+            height: 70px;
             color: #fff;
             background-color: #1f671f;
         }
-
-        
+        label, h4{
+            color: rgba(0,0,0,.5);
+        }
+        .display-4{
+            font-size: 2.5rem !important;
+        }
     </style>
     <!-- <script src="main.js"></script> -->
 </head>
@@ -71,7 +75,60 @@
     </nav>
     <!-- CONTAINER -->
     <div id="section1" class="container-fluid">
-
+        <div class="row">
+            <div class="col-sm"></div>
+            <div class="col-sm">
+                    <h4 class="display-4">Reporte de problematicas.</h4>
+                <form>
+                    <label for="tipoProblematica">Tipo de problematica</label>
+                    <select class="form-control" id="tipoProblematica">
+                        <option>Bullyingt</option>
+                        <option>Contaminación</option>
+                        <option>Delincuencia</option>
+                        <option>Electricidad</option>
+                        <option>Otros</option>
+                        <option>Racismo</option>
+                        <option>Violencia de Genero</option>
+                    </select>
+                    <div class="form-group">
+                            <label for="exampleFormControlInput1">Fecha</label>
+                            <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                    </div>
+                    <fieldset disabled>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <!-- <label for="inputEmail4">Logintud</label> -->
+                                <input type="text" class="form-control" id="inputLogintud" placeholder="Email">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <!-- <label for="inputPassword4">Latitud</label> -->
+                                <input type="text" class="form-control" id="inputLatitud" placeholder="Password">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-group">
+                      <label for="exampleFormControlTextarea1">Comentario</label>
+                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                    <!--INPUT EVIDENCIAS-->
+                    <label for="customFile">Evidencias</label>
+                    <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="customFile">
+                            <label class="custom-file-label" ></label>
+                    </div>
+                    
+                    <label for="estatus">Estatus</label>
+                    <select class="form-control" id="estatus">
+                        <option>Pendiente</option>
+                    </select>
+                    <div class="form-group mt-3">
+                        <button type="button" class="btn btn-secondary btn-lg btn-block">Enviar</button>
+                    </div>
+                    
+                </form>
+            </div>
+            <div class="col-sm"></div>
+        </div>    
 
 
     </div>
@@ -86,8 +143,26 @@
             }).catch(function(error) {
                 alert(error);
             });
-        })
-    
+        });
+
+        window.addEventListener('load', inicio, false);
+        function inicio() {
+
+            $("#customFile").change(()=>{
+                $(".custom-file-label").text($("#customFile").val())
+            });
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(mostrarCoordenada);
+            } else {
+            alert('El navegador no dispone la capacidad de geolocalización');
+            }
+        }
+
+        function mostrarCoordenada(posicion) {
+            $("#inputLogintud").val(posicion.coords.longitude);
+            $("#inputLatitud").val(posicion.coords.latitude);
+        }
     </script>
 </body>
 </html>
