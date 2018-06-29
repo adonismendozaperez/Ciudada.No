@@ -60,7 +60,7 @@
                     <a class="nav-link" href="Dashboard.html">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="Dashboard.html">Denuncías</a>
+                    <a class="nav-link" href="Denuncias.html">Denuncías</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="Dashboard.html">Estadisticas</a>
@@ -151,6 +151,7 @@
          let latitud = $("#inputLatitud").val();
          let comentario = $("#inputComentario").val();
          let estatus = $("#inputEstatus").val();
+         let userName = firebase.auth().currentUser;
 
          let obj = {
              Tipo : tipo,
@@ -158,17 +159,15 @@
              Longitud : longitud,
              Latitud : latitud,
              Comentario : comentario,
-             Estatus : estatus
+             Estatus : estatus,
+             UserName: userName.email
           }
 
           firebase.database().ref("Problematicas").push(obj);
           swal("Save!", "Datos Guardados correctamente!", "success");
-            $("#inputTipoProblematica").val("");
-            $("#inputFecha").val("");
-            $("#inputLogintud").val("");
-            $("#inputLatitud").val("");
-            $("#inputComentario").val("");
-            $("#inputEstatus").val("");
+          $("#inputTipoProblematica").val("");
+          $("#inputFecha").val("");
+          $("#inputComentario").val("");
     });
     </script>
 </body>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Dashboard | Ciudada.No</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyAphHJJBP2HpPNynnQgZ66GkAr23wtLEiA",
+            authDomain: "ciudada-no.firebaseapp.com",
+            databaseURL: "https://ciudada-no.firebaseio.com",
+            projectId: "ciudada-no",
+            storageBucket: "ciudada-no.appspot.com",
+            messagingSenderId: "896456539633"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <style>
+        #section1 {
+            padding-top: 50px;
+            height: 687px;
+            color: #fff;
+            background-color: white;
+        }
+        #section2 {
+            padding-top: 50px;
+            height: 70px;
+            color: #fff;
+            background-color: #1f671f;
+        }
+        label, h4{
+            color: rgba(0,0,0,.5);
+        }
+        .display-4{
+            font-size: 2.5rem !important;
+        }
+        p{
+            color: black;
+        }
+    </style>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="Dashboard.js"></script>
+</head>
+
+<body>
+    <!-- NAVBAR-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="Dashboard.html">Ciudada.No</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a class="nav-link" href="Dashboard.html">Inicio</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="Dashboard.html">Denuncías</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Dashboard.html">Estadisticas</a>
+                </li>
+            </ul>
+            <span class="navbar-text" id="UserName" >
+                    <button class="btn btn-outline-success my-2 my-sm-0 btnSalir"  style="margin-left: 10px;" type="submit">Salir</button>
+            </span>
+        </div>
+    </nav>
+    <!-- CONTAINER -->
+    <div id="section1" class="container-fluid">
+        <div class="row">
+            <div class="col-sm"></div>
+            <div class="col-sm">
+                    <h4 class="display-4">Últimas Denuncías.</h4>
+                    <table class="table mt-3">
+                        <thead class="thead-light">
+                            <tr>
+                            <th scope="col">Tipo</th><th scope="col">Comantario</th><th scope="col">Estatus</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cuerpoTabla">
+                        </tbody>
+                    </table>
+            </div>
+            <div class="col-sm"></div>
+        </div>    
+    </div>
+
+    <div id="section2" class="container-fluid"></div>
+
+    <script>
+     //SESION   
+     let us;
+     firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+           us = firebase.auth().currentUser;
+           $("#UserName").prepend(`${us.email}`)
+        } else {
+          location.href = 'index.html';
+        }
+      });
+
+         firebase.database().ref('Problematicas').orderByChild("Fecha").limitToLast(15).on('child_added',function(data){
+             console.log(data.val());
+             $("#cuerpoTabla")
+             .prepend(`
+                <tr>
+                    <th scope="row"><p>${data.val().Tipo}</p></th>
+                    <td><p>${data.val().Comentario}</p></td>
+                    <td><p>${data.val().Estatus}</p></td>
+                </tr>
+                `);
+         });
+    </script>
+</body>
+</html>
