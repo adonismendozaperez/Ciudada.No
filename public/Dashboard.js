@@ -4,7 +4,6 @@ $(document).ready(inicio);
 
 
 function inicio() {
-
     $(".btnSalir").click(()=>{
         firebase.auth().signOut().then(function() {
             location.href = 'index.html';
