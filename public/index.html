@@ -22,8 +22,7 @@
     <nav class="navbar navbar-light justify-content-between">
             <a class="navbar-brand"></a>
             <form class="form-inline">
-              <button class="btn btn-outline-success my-2 my-sm-0 btnlogin" type="submit">Login</button>
-              <button class="btn btn-outline-success my-2 my-sm-0 btnregistrar" style="margin-left: 10px;" type="submit">Registrarse</button>
+              <button class="btn btn-outline-success my-2 my-sm-0 btnregistrar" style="margin-left: 10px;" type="submit">Ingresar</button>
             </form>
     </nav>
     <!-- CONTAINER -->
@@ -31,17 +30,23 @@
         <div class="text-center">
             <img src="Imagenes/ciudada.no-icono.png" style="width: 380px;" class="rounded" alt="...">
         </div>
+        <div class="row">
+            <div class="col-sm"></div>
+            <div class="col-sm">
+                <div class="alert alert-light" role="alert">
+                    <hr>
+                    <p class="mb-0"><strong>Ciudada.No</strong> le permitirá a los ciudadanos la posibilidad de reportar
+                            las problematicas que pasen en su sector. Anímate, denuncíalo y exige tús derechos!</p>
+                </div>
+            </div>
+            <div class="col-sm"></div>
+        </div>
     </div>
 
     <div id="section2" class="container-fluid">
     </div>   
     
     <script>
-        $(".btnlogin").click((e)=>{
-            e.preventDefault();
-            location.href = 'Login.html';
-        })
-
         $(".btnregistrar").click((e)=>{
             e.preventDefault();
             location.href = 'Login.html';

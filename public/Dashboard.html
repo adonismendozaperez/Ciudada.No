@@ -85,26 +85,13 @@
                         <option>Contaminación</option>
                         <option>Delincuencia</option>
                         <option>Electricidad</option>
-                        <option>Otros</option>
                         <option>Racismo</option>
                         <option>Violencia de Genero</option>
+                        <option>Otros</option>
                     </select>
-                    <!--FECHA-->
-                    <div class="form-group">
-                        <label for="inputFecha">Fecha</label>
-                        <input type="date" class="form-control" id="inputFecha" placeholder="name@example.com">
-                    </div>
                     <!--lONGITUD, LATITUD -->
-                    <fieldset disabled>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <input type="text" class="form-control" id="inputLogintud" placeholder="Logintud">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <input type="text" class="form-control" id="inputLatitud" placeholder="Latitud">
-                            </div>
-                        </div>
-                    </fieldset>
+                    <p id="inputLogintud" style="display: none"></p>
+                    <p id="inputLatitud" style="display: none"></p>
                     <!--INPUT COMENTARIO-->
                     <div class="form-group">
                       <label for="inputComentario">Comentario</label>
@@ -116,11 +103,6 @@
                         <input type="file" class="custom-file-input" id="customFile">
                         <label class="custom-file-label" ></label>
                     </div>
-                    <!--INPUT ESTATUS-->
-                    <label for="inputEstatus">Estatus</label>
-                    <select class="form-control" id="inputEstatus">
-                        <option>Pendiente</option>
-                    </select>
                     <!--INPUT ENVIAR-->
                     <div class="form-group mt-3">
                         <button type="button" class="btn btn-secondary btn-lg btn-block" id="btnEnviarProblematica">Enviar</button>
@@ -144,14 +126,26 @@
         }
       });
 
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(mostrarCoordenada);
+        } else {
+            alert('El navegador no dispone la capacidad de geolocalización');
+        }
+
+        function mostrarCoordenada(posicion) {
+            $("#inputLogintud").text(posicion.coords.longitude);
+            $("#inputLatitud").text(posicion.coords.latitude);
+        }
+
     $("#btnEnviarProblematica").click(()=>{
-         let tipo = $("#inputTipoProblematica").val();
-         let fecha = $("#inputFecha").val();
-         let longitud = $("#inputLogintud").val();
-         let latitud = $("#inputLatitud").val();
-         let comentario = $("#inputComentario").val();
-         let estatus = $("#inputEstatus").val();
-         let userName = firebase.auth().currentUser;
+        if($("#inputComentario").val() !== ""){
+            let tipo =      $("#inputTipoProblematica").val();
+         let fecha =     new Date(Date.now()).toLocaleString();
+         let longitud =  $("#inputLogintud").text();
+         let latitud =   $("#inputLatitud").text();
+         let comentario =$("#inputComentario").val();
+         let estatus =   "Pendiente";
+         let userName =  firebase.auth().currentUser;
 
          let obj = {
              Tipo : tipo,
@@ -164,10 +158,15 @@
           }
 
           firebase.database().ref("Problematicas").push(obj);
-          swal("Save!", "Datos Guardados correctamente!", "success");
+          swal("Guardado!", "Datos Guardados correctamente!", "success");
           $("#inputTipoProblematica").val("");
           $("#inputFecha").val("");
           $("#inputComentario").val("");
+        }
+        else{
+            swal("Alerta!", "Debe rellenar todos los campos correctamente!", "warning");
+        }
+         
     });
     </script>
 </body>
