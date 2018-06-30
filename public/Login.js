@@ -1,69 +1,17 @@
 (function (){
-
+    //CREAR NUEVO USUARIO
     $(".btnCrear").click(function(e){
         e.preventDefault();
-
-        let user = $("#RegistroInputEmail").val();
-        let pass = $("#RegistroInputPassword").val();
-    
-         firebase.auth().createUserWithEmailAndPassword(user, pass)
-         .then(function(){
-            $("#RegistroInputEmail").val("");
-            $("#RegistroInputPassword").val("");
-         })
-         .catch(function(error) {
-             var errorCode = error.code;
-             var errorMessage = error.message;
-             if (errorCode == 'auth/weak-password') {
-                swal({
-                    title: "Informacion!",
-                    text: "The password is too weak.!",
-                    icon: "warning",
-                    button: "Okey!",
-                  });
-              }
-              else if(errorCode == 'auth/email-already-in-use'){
-                swal({
-                    title: "Informacion!",
-                    text: "This acount already in use!",
-                    icon: "warning",
-                    button: "Okey!",
-                  });
-              }
-              else if(errorCode == 'auth/invalid-email'){
-                swal({
-                    title: "Informacion!",
-                    text: "The email address is not valid!",
-                    icon: "warning",
-                    button: "Okey!",
-                  });
-              }
-              else if(errorCode == 'auth/weak-password'){
-                swal({
-                    title: "Informacion!",
-                    text: "The password is not strong enough!",
-                    icon: "warning",
-                    button: "Okey!",
-                  });
-              }
-              else{
-                swal({
-                    title: "Informacion!",
-                    text: errorMessage,
-                    icon: "warning",
-                    button: "Okey!",
-                  });
-              }
-
-           });
+        NuevoUsuario($("#RegistroInputEmail").val(), $("#RegistroInputPassword").val());
     });
 
+    //INICIAR SESION
     $(".btnIniciarSesion").click(function(e){
         e.preventDefault();
-
-        let user = $("#LoginInputEmail").val();
-        let pass = $("#LoginInputPassword").val();
-
+        Login($("#LoginInputEmail").val(), $("#LoginInputPassword").val());
+    });
+    
+    function Login(user,pass){
         firebase.auth().signInWithEmailAndPassword(user, pass)
         .then(()=>{
             $("#LoginInputEmail").val("");
@@ -71,34 +19,86 @@
             location.href = "Dashboard.html";
         })
         .catch(function(error) {
-            var errorCode = error.code;
-            var errorMessage = error.message;
+            let errorCode = error.code;
+            let errorMessage = error.message;
             if (errorCode === 'auth/wrong-password') {
                 swal({
-                    title: "Informacion!",
-                    text: "Wrong password",
+                    title: "Información!",
+                    text: "Contraseña incorrecta",
                     icon: "warning",
                     button: "Okey!",
                   });
             }
             else if(errorCode === 'auth/invalid-email'){
                 swal({
-                    title: "Informacion!",
-                    text: "The email address is badly formatted.",
+                    title: "Información!",
+                    text: "La dirección de correo electrónico está mal, favor de veríficar.",
                     icon: "warning",
                     button: "Okey!",
                   });
             }
             else {
                 swal({
-                    title: "Informacion!",
+                    title: "Información!",
                     text: errorMessage,
                     icon: "warning",
                     button: "Okey!",
                   });
             }
-            console.log(error);
         });
-    });
-    
+    }
+
+    function NuevoUsuario(user,pass){
+        firebase.auth().createUserWithEmailAndPassword(user, pass)
+        .then(function(){
+            Login(user,pass);
+            $("#RegistroInputEmail").val("");
+            $("#RegistroInputPassword").val("");
+        })
+        .catch(function(error) {
+            let errorCode = error.code;
+            let errorMessage = error.message;
+            if (errorCode == 'auth/weak-password') {
+                swal({
+                    title: "Información!",
+                    text: "La contraseña es muy débil!",
+                    icon: "warning",
+                    button: "Okey!",
+                    });
+                }
+                else if(errorCode == 'auth/email-already-in-use'){
+                swal({
+                    title: "Información!",
+                    text: "Esta cuenta ya está en uso, favor de intentar con otra!",
+                    icon: "warning",
+                    button: "Okey!",
+                    });
+                }
+                else if(errorCode == 'auth/invalid-email'){
+                swal({
+                    title: "Información!",
+                    text: "La dirección de correo electrónico no es válida!",
+                    icon: "warning",
+                    button: "Okey!",
+                    });
+                }
+                else if(errorCode == 'auth/weak-password'){
+                swal({
+                    title: "Información!",
+                    text: "La contraseña no es lo suficientemente fuerte, favor de intentar con otra!",
+                    icon: "warning",
+                    button: "Okey!",
+                    });
+                }
+                else{
+                swal({
+                    title: "Información!",
+                    text: errorMessage,
+                    icon: "warning",
+                    button: "Okey!",
+                    });
+                }
+        });
+    }
+
 })();
