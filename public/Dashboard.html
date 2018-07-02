@@ -9,6 +9,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
     <script>
         // Initialize Firebase
@@ -67,6 +68,7 @@
                 </li>
             </ul>
             <span class="navbar-text" id="UserName" >
+                    |  <a href="MyCuenta.html"><i class="fas fa-user-cog"></i> Mi Cuenta</a>  
                     <button class="btn btn-outline-success my-2 my-sm-0 btnSalir"  style="margin-left: 10px;" type="submit">Salir</button>
             </span>
         </div>
@@ -120,7 +122,7 @@
      firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
            let us = firebase.auth().currentUser;
-           $("#UserName").prepend(`${us.email}`)
+           $("#UserName").prepend(`<i class="far fa-user"></i> ${us.email}`)
         } else {
           location.href = 'index.html';
         }
@@ -139,7 +141,7 @@
 
     $("#btnEnviarProblematica").click(()=>{
         if($("#inputComentario").val() !== ""){
-            let tipo =      $("#inputTipoProblematica").val();
+         let tipo =      $("#inputTipoProblematica").val();
          let fecha =     new Date(Date.now()).toLocaleString();
          let longitud =  $("#inputLogintud").text();
          let latitud =   $("#inputLatitud").text();

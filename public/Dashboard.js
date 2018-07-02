@@ -11,7 +11,5 @@ function inicio() {
 
     $("#customFile").change(()=>{
         $(".custom-file-label").text($("#customFile").val())
-    });
-
-      
+    });   
 }
