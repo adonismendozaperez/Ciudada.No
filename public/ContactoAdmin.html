@@ -42,12 +42,6 @@
         .display-4{
             font-size: 2.5rem !important;
         }
-        p{
-            color: black;
-        }
-        .col-sm{
-            margin: 30px;
-        }
     </style>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="Dashboard.js"></script>
@@ -77,7 +71,7 @@
                 </li>
             </ul>
             <span class="navbar-text" id="UserName" >
-                        |  <a href="MyCuenta.html"><i class="fas fa-user-cog"></i> Mi Cuenta</a>  
+                    |  <a href="MyCuenta.html"><i class="fas fa-user-cog"></i> Mi Cuenta</a>  
                     <button class="btn btn-outline-success my-2 my-sm-0 btnSalir"  style="margin-left: 10px;" type="submit">Salir</button>
             </span>
         </div>
@@ -85,30 +79,29 @@
     <!-- CONTAINER -->
     <div id="section1" class="container-fluid">
         <div class="row">
+            <div class="col-sm"></div>
             <div class="col-sm">
-                    <h4 class="display-4">Configuraciones de usuario.</h4>
-                <!--FORMULARIO-->
+                    <h4 class="display-4">Enviar mensaje al admin.</h4>
                 <form>
-                    <div class="form-group mt-4">
-                        <label for="InputPassword">Cambiar Password</label>
-                        <input type="password" class="form-control" id="InputPassword" placeholder="Ingrese su Password">
+                    <!--lONGITUD, LATITUD -->
+                    <p id="inputLogintud" style="display: none"></p>
+                    <p id="inputLatitud" style="display: none"></p>
+                    <div class="form-group">
+                        <label for="inputTitulo">Titulo</label>
+                        <input type="text" class="form-control" id="inputTitulo">
+                      </div>
+                    <!--INPUT Contenido-->
+                    <div class="form-group">
+                      <label for="inputContenido">Contenido</label>
+                      <textarea class="form-control" id="inputContenido" rows="3"></textarea>
                     </div>
-                    <button type="submit" class="btn btnCambiarPassword" style="background-color: #1f671f; color: white">Cambiar</button>
+                    <!--INPUT ENVIAR-->
+                    <div class="form-group mt-3">
+                        <button type="button" class="btn btn-secondary btn-lg btn-block" id="btnEnviarMensaje">Enviar</button>
+                    </div>
                 </form>
-                <hr/>
             </div>
-            <div class="col-sm">
-                <h4 class="display-4">Mis Denuncías.</h4>
-                <table class="table mt-3 table-fixed">
-                    <thead class="thead-light">
-                        <tr>
-                        <th scope="col">Tipo</th><th scope="col">Comantario</th><th scope="col">Estatus</th>
-                        </tr>
-                    </thead>
-                    <tbody id="cuerpoTabla">
-                    </tbody>
-                </table> 
-            </div>
+            <div class="col-sm"></div>
         </div>    
     </div>
 
@@ -119,38 +112,36 @@
      firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
            let us = firebase.auth().currentUser;
-           $("#UserName").prepend(`<i class="far fa-user"></i> ${us.email}`);
-            
-            //TABLA MIS DENUNCIAS
-            firebase.database().ref('Problematicas').orderByChild("UserName").startAt(`${us.email}`).endAt(`${us.email}`).limitToLast(3).on('child_added',function(data){
-                $("#cuerpoTabla")
-                .prepend(`
-                    <tr>
-                        <th scope="row"><p>${data.val().Tipo}</p></th>
-                        <td><p>${data.val().Comentario}</p></td>
-                        <td><p>${data.val().Estatus}</p></td>
-                    </tr>
-                `); 
-            });
+           $("#UserName").prepend(`<i class="far fa-user"></i> ${us.email}`)
         } else {
           location.href = 'index.html';
         }
       });
 
-      $(".btnCambiarPassword").click((e)=>{
-          e.preventDefault();
-         let user = firebase.auth().currentUser;
-         //CAMBIAR PASSWORD
-         let newPassword = $("#InputPassword").val();
+    $("#btnEnviarMensaje").click(()=>{
+        if($("#inputTitulo").val() !== "" && $("#inputContenido").val() !== "" ){
+         let titulo =      $("#inputTitulo").val();
+         let contenido =  $("#inputContenido").val();
+         let userName =  firebase.auth().currentUser;
+         let fecha =     new Date(Date.now()).toLocaleString();
 
-         user.updatePassword(newPassword).then(function() {
-            swal("Listo!", "La contraseña fue cambiada correctamente!", "success");
-         }).catch(function(error) {
-            let errorMessage = error.message;
-            swal("Información!", errorMessage, "warning");
-         });
-      });
-     
+         let obj = {
+             Titulo : titulo,
+             Contenido : contenido,
+             UserName: userName.email,
+             Fecha : fecha
+          }
+
+          firebase.database().ref("MsjAdmin").push(obj);
+          swal("Mensaje Enviado!", "Mensaje enviado correctamente!", "success");
+          $("#inputTitulo").val("");
+          $("#inputContenido").val("");
+        }
+        else{
+            swal("Alerta!", "Debe rellenar todos los campos correctamente!", "warning");
+        }
+         
+    });
     </script>
 </body>
 </html>
