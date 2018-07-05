@@ -1,0 +1,21 @@
+#section1 {
+    padding-top: 50px;
+    height: 687px;
+    color: #fff;
+    background-color: white;
+}
+#section2 {
+    padding-top: 50px;
+    height: 70px;
+    color: #fff;
+    background-color: #1f671f;
+}
+label, h4{
+    color: rgba(0,0,0,.5);
+}
+.display-4{
+    font-size: 2.5rem !important;
+}
+p{
+    color: black;
+}

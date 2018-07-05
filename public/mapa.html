@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Denuncias | Ciudada.No</title>
+    <title>Dashboard | Ciudada.No</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -23,6 +23,10 @@
         };
         firebase.initializeApp(config);
     </script>
+    <!--LIBRERIAS DEL MAPA-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+
      <link rel="stylesheet" type="text/css" media="screen" href="css/global.css" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="Dashboard.js"></script>
@@ -31,49 +35,39 @@
 <body>
     <!-- NAVBAR-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="Dashboard.html">Ciudada.No</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
-                aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="Dashboard.html">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Denuncias.html">Denuncías</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="mapa.html">Mapa</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="ContactoAdmin.html">Contacto</a>
-                    </li>
-                </ul>
-                <span class="navbar-text" id="UserName" >
-                        |  <a href="MyCuenta.html"><i class="fas fa-user-cog"></i> Mi Cuenta</a>    
-                        <button class="btn btn-outline-success my-2 my-sm-0 btnSalir"  style="margin-left: 10px;" type="submit">Salir</button>
-                </span>
-            </div>
-        </nav>
+        <a class="navbar-brand" href="Dashboard.html">Ciudada.No</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="Dashboard.html">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Denuncias.html">Denuncías</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="mapa.html">Mapa</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="ContactoAdmin.html">Contacto</a>
+                </li>
+            </ul>
+            <span class="navbar-text" id="UserName" >
+                    |  <a href="MyCuenta.html"><i class="fas fa-user-cog"></i> Mi Cuenta</a>  
+                    <button class="btn btn-outline-success my-2 my-sm-0 btnSalir"  style="margin-left: 10px;" type="submit">Salir</button>
+            </span>
+        </div>
+    </nav>
     <!-- CONTAINER -->
     <div id="section1" class="container-fluid">
         <div class="row">
-            <div class="col-sm"></div>
             <div class="col-sm">
-                    <h4 class="display-4">Últimas Denuncías.</h4>
-                    <table class="table mt-3">
-                        <thead class="thead-light">
-                            <tr>
-                            <th scope="col">Tipo</th><th scope="col">Comantario</th><th scope="col">Estatus</th>
-                            </tr>
-                        </thead>
-                        <tbody id="cuerpoTabla">
-                        </tbody>
-                    </table> 
+                <h4 class="text-center">Mapa de Incidencias.</h4>
+                <div id="map" class="map map-home" style="height:580px;"></div>
             </div>
-            <div class="col-sm"></div>
         </div>    
     </div>
 
@@ -81,25 +75,27 @@
 
     <script>
      //SESION   
-     let us;
      firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-           us = firebase.auth().currentUser;
+           let us = firebase.auth().currentUser;
            $("#UserName").prepend(`<i class="far fa-user"></i> ${us.email}`)
         } else {
           location.href = 'index.html';
         }
       });
 
-         firebase.database().ref('Problematicas').orderByChild("Fecha").limitToLast(4).on('child_added',function(data){
-             $("#cuerpoTabla")
-              .prepend(`
-                 <tr>
-                     <th scope="row"><p>${data.val().Tipo}</p></th>
-                     <td><p>${data.val().Comentario}</p></td>
-                     <td><p>${data.val().Estatus}</p></td>
-                 </tr>
-                 `);
+    //MAPA
+ 	let osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+		osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+		osm = L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib});
+        let maps, map; 
+        map = L.map('map').setView([18.4861,  -69.9312], 15).addLayer(osm);
+
+         firebase.database().ref('Problematicas').on('child_added',function(data){
+	        maps = L.marker([data.val().Latitud, data.val().Longitud])
+            .addTo(map)
+		    .bindPopup(`<b>${data.val().Tipo}</b><br>${data.val().Comentario}`)
+		    .openPopup();
          });
     </script>
 </body>
