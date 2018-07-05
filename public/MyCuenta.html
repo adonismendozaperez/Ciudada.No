@@ -42,6 +42,12 @@
         .display-4{
             font-size: 2.5rem !important;
         }
+        p{
+            color: black;
+        }
+        .col-sm{
+            margin: 30px;
+        }
     </style>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="Dashboard.js"></script>
@@ -76,7 +82,6 @@
     <!-- CONTAINER -->
     <div id="section1" class="container-fluid">
         <div class="row">
-            <div class="col-sm"></div>
             <div class="col-sm">
                     <h4 class="display-4">Configuraciones de usuario.</h4>
                 <!--FORMULARIO-->
@@ -87,8 +92,20 @@
                     </div>
                     <button type="submit" class="btn btnCambiarPassword" style="background-color: #1f671f; color: white">Cambiar</button>
                 </form>
+                <hr/>
             </div>
-            <div class="col-sm"></div>
+            <div class="col-sm">
+                <h4 class="display-4">Mis Denuncías.</h4>
+                <table class="table mt-3 table-fixed">
+                    <thead class="thead-light">
+                        <tr>
+                        <th scope="col">Tipo</th><th scope="col">Comantario</th><th scope="col">Estatus</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoTabla">
+                    </tbody>
+                </table> 
+            </div>
         </div>    
     </div>
 
@@ -99,7 +116,19 @@
      firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
            let us = firebase.auth().currentUser;
-           $("#UserName").prepend(`<i class="far fa-user"></i> ${us.email}`)
+           $("#UserName").prepend(`<i class="far fa-user"></i> ${us.email}`);
+            
+            //TABLA MIS DENUNCIAS
+            firebase.database().ref('Problematicas').orderByChild("UserName").startAt(`${us.email}`).endAt(`${us.email}`).limitToLast(3).on('child_added',function(data){
+                $("#cuerpoTabla")
+                .prepend(`
+                    <tr>
+                        <th scope="row"><p>${data.val().Tipo}</p></th>
+                        <td><p>${data.val().Comentario}</p></td>
+                        <td><p>${data.val().Estatus}</p></td>
+                    </tr>
+                `); 
+            });
         } else {
           location.href = 'index.html';
         }
@@ -118,7 +147,7 @@
             swal("Información!", errorMessage, "warning");
          });
       });
-
+     
     </script>
 </body>
 </html>

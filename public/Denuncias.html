@@ -45,6 +45,7 @@
         p{
             color: black;
         }
+
     </style>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="Dashboard.js"></script>
@@ -90,7 +91,7 @@
                         </thead>
                         <tbody id="cuerpoTabla">
                         </tbody>
-                    </table>
+                    </table> 
             </div>
             <div class="col-sm"></div>
         </div>    
@@ -110,16 +111,15 @@
         }
       });
 
-         firebase.database().ref('Problematicas').orderByChild("Fecha").limitToLast(15).on('child_added',function(data){
-             console.log(data.val());
+         firebase.database().ref('Problematicas').orderByChild("Fecha").limitToLast(4).on('child_added',function(data){
              $("#cuerpoTabla")
-             .prepend(`
-                <tr>
-                    <th scope="row"><p>${data.val().Tipo}</p></th>
-                    <td><p>${data.val().Comentario}</p></td>
-                    <td><p>${data.val().Estatus}</p></td>
-                </tr>
-                `);
+              .prepend(`
+                 <tr>
+                     <th scope="row"><p>${data.val().Tipo}</p></th>
+                     <td><p>${data.val().Comentario}</p></td>
+                     <td><p>${data.val().Estatus}</p></td>
+                 </tr>
+                 `);
          });
     </script>
 </body>
