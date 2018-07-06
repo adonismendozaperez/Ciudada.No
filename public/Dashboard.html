@@ -106,7 +106,7 @@
      firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
            let us = firebase.auth().currentUser;
-           $("#UserName").prepend(`<i class="far fa-user"></i> ${us.email}`)
+           $("#UserName").prepend(`<i class="far fa-user"></i> ${us.email}`);
         } else {
           location.href = 'index.html';
         }

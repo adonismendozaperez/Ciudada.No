@@ -16,7 +16,14 @@
         .then(()=>{
             $("#LoginInputEmail").val("");
             $("#LoginInputPassword").val("");
-            location.href = "Dashboard.html";
+            debugger;
+            if(user === "adonis.mendoza@outlook.com"){
+                location.href = 'Admin.html';
+            }
+            else{
+                location.href = "Dashboard.html";
+            }
+
         })
         .catch(function(error) {
             let errorCode = error.code;

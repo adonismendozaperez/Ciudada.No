@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Dashboard | Ciudada.No</title>
+    <title>Admin | Ciudada.No</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -26,6 +26,17 @@
      <link rel="stylesheet" type="text/css" media="screen" href="css/global.css" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="Dashboard.js"></script>
+
+
+    <!--DEV EXTREME DEPENDENCIAS-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <script>window.jQuery || document.write(decodeURIComponent('%3Cscript src="js/jquery.min.js"%3E%3C/script%3E'))</script>
+    <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/18.1.4/css/dx.spa.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/18.1.4/css/dx.common.css" />
+    <link rel="dx-theme" data-theme="generic.light" href="https://cdn3.devexpress.com/jslib/18.1.4/css/dx.light.css" />
+    <script src="https://cdn3.devexpress.com/jslib/18.1.4/js/dx.all.js"></script>
 </head>
 
 <body>
@@ -39,20 +50,16 @@
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="Dashboard.html">Inicio</a>
+                    <a class="nav-link" href="Admin.html">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="Denuncias.html">Denuncías</a>
+                    <a class="nav-link" href="TiposCasos.html">Tipos casos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="mapa.html">Mapa</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="ContactoAdmin.html">Contacto</a>
+                    <a class="nav-link" href="MensajesAdmin.html">Mensajes</a>
                 </li>
             </ul>
             <span class="navbar-text" id="UserName" >
-                    |  <a href="MyCuenta.html"><i class="fas fa-user-cog"></i> Mi Cuenta</a>  
                     <button class="btn btn-outline-success my-2 my-sm-0 btnSalir"  style="margin-left: 10px;" type="submit">Salir</button>
             </span>
         </div>
@@ -62,22 +69,15 @@
         <div class="row">
             <div class="col-sm"></div>
             <div class="col-sm">
-                    <h4 class="display-4">Enviar mensaje al admin.</h4>
-                <form>
-                    <div class="form-group">
-                        <label for="inputTitulo">Titulo</label>
-                        <input type="text" class="form-control" id="inputTitulo">
-                      </div>
-                    <!--INPUT Contenido-->
-                    <div class="form-group">
-                      <label for="inputContenido">Contenido</label>
-                      <textarea class="form-control" id="inputContenido" rows="3"></textarea>
+                <h4 class="display-4">Administrar Denuncías.</h4>
+                <!-- <div class="dx-viewport mt-3"> -->
+                    <div class="demo-container mt-3">
+                        <div id="data-grid-demo">
+                            <div id="gridContainer"></div>
+                        </div>
                     </div>
-                    <!--INPUT ENVIAR-->
-                    <div class="form-group mt-3">
-                        <button type="button" class="btn btn-secondary btn-lg btn-block" id="btnEnviarMensaje">Enviar</button>
-                    </div>
-                </form>
+                <!-- </div> -->
+
             </div>
             <div class="col-sm"></div>
         </div>    
@@ -90,36 +90,64 @@
      firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
            let us = firebase.auth().currentUser;
-           $("#UserName").prepend(`<i class="far fa-user"></i> ${us.email}`)
+           $("#UserName").prepend(`<i class="far fa-user"></i> ${us.email}`);
         } else {
           location.href = 'index.html';
         }
       });
 
-    $("#btnEnviarMensaje").click(()=>{
-        if($("#inputTitulo").val() !== "" && $("#inputContenido").val() !== "" ){
-         let titulo =      $("#inputTitulo").val();
-         let contenido =  $("#inputContenido").val();
-         let userName =  firebase.auth().currentUser;
-         let fecha =     new Date(Date.now()).toLocaleString();
+    
+            let denuncias=[];
+            let obj = {}
+      //GET-DENUNCIAS
+            firebase.database().ref('Problematicas').orderByChild("Fecha").on('child_added',function(data){
+             obj = {
+                "Tipo": data.val().Tipo,
+                "Comentario": data.val().Comentario,
+                "Estatus":    data.val().Estatus
+            };
+            denuncias.push(obj);
+         })
 
-         let obj = {
-             Titulo : titulo,
-             Contenido : contenido,
-             UserName: userName.email,
-             Fecha : fecha
-          }
-
-          firebase.database().ref("MsjAdmin").push(obj);
-          swal("Mensaje Enviado!", "Mensaje enviado correctamente!", "success");
-          $("#inputTitulo").val("");
-          $("#inputContenido").val("");
-        }
-        else{
-            swal("Alerta!", "Debe rellenar todos los campos correctamente!", "warning");
-        }
          
-    });
+          setTimeout(function(){
+            let grid =  $("#gridContainer").dxDataGrid({
+                    dataSource: denuncias,
+                    keyExpr: "Tipo",
+                    scrolling: {
+                        columnRenderingMode: "virtual"
+                    },
+                    editing: {
+                        mode: "popup",
+                        allowUpdating: true,
+                        popup: {
+                            title: "Denuncías",
+                            showTitle: true,
+                            width: 700,
+                            height: 345,
+                            position: {
+                                my: "top",
+                                at: "top",
+                                of: window
+                            }
+                        }
+                    },
+                    columns: [
+                        {
+                            caption: "Tipo",
+                            dataField: "Tipo"
+                        },
+                        {
+                            caption: "Comentario",
+                            dataField: "Comentario"
+                        },
+                        {
+                            caption: "Estatus",
+                            dataField: "Estatus"
+                        }]
+                });//END DEVEXTREME
+          },2000)
+
     </script>
 </body>
 </html>
