@@ -63,6 +63,9 @@
 </head>
 
 <body >
+    <div id="animation-loading">
+        <span><i class="fa fa-spinner fa-spin fa-pulse" style="font-size: 54px;"></i></span>
+    </div>
     <!-- NAVBAR-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="Dashboard.html">Ciudada.No</a>
@@ -87,9 +90,6 @@
             </span>
         </div>
     </nav>
-    <div id="animation-loading">
-        <span><i class="fa fa-spinner fa-spin fa-pulse" style="font-size: 54px;"></i></span>
-    </div>
     <!-- CONTAINER -->
     <div id="section1" class="container-fluid">
         <div class="row">
@@ -119,8 +119,8 @@
       });
 
     
-            let denuncias=[];
-            let obj = {}
+        let denuncias=[];
+        let obj = {}
       //GET-DENUNCIAS
         firebase.database().ref('Problematicas').orderByChild("Fecha").on('child_added',function(data){
              obj = {
@@ -131,7 +131,6 @@
             denuncias.push(obj);
          })
 
-         
           setTimeout(function(){
             let grid =  $("#gridContainer").dxDataGrid({
                     dataSource: denuncias,
@@ -175,6 +174,10 @@
           $("#animation-loading").css("display","none")
           },2000)
 
+
+          $(".dx-popup-bottom .dx-button").click(()=>{
+            console.log("Save!")
+          })
     </script>
 </body>
 </html>

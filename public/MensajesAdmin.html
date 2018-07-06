@@ -26,9 +26,44 @@
      <link rel="stylesheet" type="text/css" media="screen" href="css/global.css" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="Dashboard.js"></script>
+
+        <!--DEV EXTREME DEPENDENCIAS-->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <script>window.jQuery || document.write(decodeURIComponent('%3Cscript src="js/jquery.min.js"%3E%3C/script%3E'))</script>
+        <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/18.1.4/css/dx.spa.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/18.1.4/css/dx.common.css" />
+        <link rel="dx-theme" data-theme="generic.light" href="https://cdn3.devexpress.com/jslib/18.1.4/css/dx.light.css" />
+        <script src="https://cdn3.devexpress.com/jslib/18.1.4/js/dx.all.js"></script>
+    
+    <style>
+        /*DEV-EXTREME*/
+        .dx-row.dx-column-lines.dx-header-row {
+            border: 0.3px solid #DDDDDD !important;
+            background-color: #F8F9FA !important;
+            color:#4A4A4B;
+        }
+        .dx-datagrid .dx-column-lines > td {
+            border-left: none;
+            border-right: none;
+        }
+        #animation-loading{
+                display: flex;
+                position: fixed;
+                width: 100%;
+                justify-content: center;
+                top: 50%;
+                z-index:1;
+                color: #1F671F;
+            }
+    </style>
 </head>
 
 <body>
+    <div id="animation-loading">
+        <span><i class="fa fa-spinner fa-spin fa-pulse" style="font-size: 54px;"></i></span>
+    </div>
     <!-- NAVBAR-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="Dashboard.html">Ciudada.No</a>
@@ -58,16 +93,12 @@
         <div class="row">
             <div class="col-sm"></div>
             <div class="col-sm">
-                    <h4 class="display-4">Mensajes.</h4>
-                    <table class="table mt-3">
-                        <thead class="thead-light">
-                            <tr>
-                            <th scope="col">Titulo</th><th scope="col">Contenido</th>
-                            </tr>
-                        </thead>
-                        <tbody id="cuerpoTabla">
-                        </tbody>
-                    </table> 
+                <h4 class="display-4">Mensajes.</h4>
+                <div class="demo-container mt-3">
+                    <div id="data-grid-demo">
+                        <div id="gridContainer"></div>
+                    </div>
+                </div>
             </div>
             <div class="col-sm"></div>
         </div>    
@@ -87,15 +118,47 @@
         }
       });
 
-         firebase.database().ref('MsjAdmin').orderByChild("Fecha").limitToLast(4).on('child_added',function(data){
-             $("#cuerpoTabla")
-              .prepend(`
-                 <tr>
-                     <th scope="row"><p>${data.val().Titulo}</p></th>
-                     <td><p>${data.val().Contenido}</p></td>
-                 </tr>
-                 `);
-         });
+        let denuncias=[];
+        let obj = {}
+        firebase.database().ref('MsjAdmin').orderByChild("Fecha").limitToLast(4).on('child_added',function(data){
+                obj = {
+                "Titulo": data.val().Titulo,
+                "Contenido": data.val().Contenido,
+                "UserName": data.val().UserName
+            };
+            denuncias.push(obj);
+        });
+
+
+        setTimeout(function(){
+        let grid =  $("#gridContainer").dxDataGrid({
+                dataSource: denuncias,
+                keyExpr: "Titulo",
+                height: 550,
+                scrolling: {
+                    columnRenderingMode: "virtual"
+                },
+                columns: [
+                    {
+                        caption: "Titulo",
+                        dataField: "Titulo",
+                        width: 150
+                    },
+                    {
+                        caption: "Contenido",
+                        dataField: "Contenido"
+                    },
+                    ,
+                    {
+                        caption: "Usuario",
+                        dataField: "UserName"
+                    }]
+            });//END DEVEXTREME
+        //END ANIMACION      
+        $("#animation-loading").css("display","none")
+        },2000)
+
+
     </script>
 </body>
 </html>
