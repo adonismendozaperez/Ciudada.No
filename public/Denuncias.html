@@ -26,42 +26,32 @@
      <link rel="stylesheet" type="text/css" media="screen" href="css/global.css" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="Dashboard.js"></script>
-
-        <!--DEV EXTREME DEPENDENCIAS-->
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-        <script>window.jQuery || document.write(decodeURIComponent('%3Cscript src="js/jquery.min.js"%3E%3C/script%3E'))</script>
-        <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/18.1.4/css/dx.spa.css" />
-        <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/18.1.4/css/dx.common.css" />
-        <link rel="dx-theme" data-theme="generic.light" href="https://cdn3.devexpress.com/jslib/18.1.4/css/dx.light.css" />
-        <script src="https://cdn3.devexpress.com/jslib/18.1.4/js/dx.all.js"></script>
-    
     <style>
-        /*DEV-EXTREME*/
-        .dx-row.dx-column-lines.dx-header-row {
-            border: 0.3px solid #DDDDDD !important;
-            background-color: #F8F9FA !important;
-            color:#4A4A4B;
-        }
-        .dx-datagrid .dx-column-lines > td {
-            border-left: none;
-            border-right: none;
-        }
-        #animation-loading{
-                display: flex;
-                position: fixed;
-                width: 100%;
-                justify-content: center;
-                top: 50%;
-                z-index:1;
-                color: #1F671F;
+            .container-body{
+                position: relative;
+                top: 20px;
             }
+            .img-list{
+                height: 50px;
+                width: 57px;
+            }
+            .media-body{
+                left: 10px;
+                position: relative;
+            }
+            .list-unstyled{
+                height: 500px;
+                overflow: hidden;
+            }
+            .list-unstyled:hover{
+                overflow-y: auto;
+            }
+
     </style>
 </head>
 
 <body>
-    <div id="animation-loading">
+     <div id="animation-loading">
         <span><i class="fa fa-spinner fa-spin fa-pulse" style="font-size: 54px;"></i></span>
     </div>
     <!-- NAVBAR-->
@@ -73,10 +63,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item ">
                         <a class="nav-link" href="Dashboard.html">Inicio</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <a class="nav-link" href="Denuncias.html">Denuncías</a>
                     </li>
                     <li class="nav-item">
@@ -93,14 +83,14 @@
             </div>
         </nav>
     <!-- CONTAINER -->
-    <div id="section1" class="container-fluid">
+    <div id="section1" class="container">
         <div class="row">
             <div class="col">
                 <h4 class="display-4 text-center">Últimas Denuncías.</h4>
-                <div class="demo-container mt-3">
-                    <div id="data-grid-demo">
-                        <div id="gridContainer"></div>
-                    </div>
+                <div class="container-body">
+                    <ul class="list-unstyled">
+                       
+                    </ul>
                 </div>
             </div>
         </div>    
@@ -120,46 +110,21 @@
         }
       });
 
-        let denuncias=[];
-        let obj = {}
-
         firebase.database().ref('Problematicas').orderByChild("Fecha").limitToLast(15).on('child_added',function(data){
-        obj = {
-            "Tipo": data.val().Tipo,
-            "Comentario": data.val().Comentario,
-            "Estatus":    data.val().Estatus
-        };
-        denuncias.push(obj);
-        });
+       
+            $(".list-unstyled").append(`
+            <li class="media" style="color:silver;">
+                <img class="rounded float-left img-list" src="Imagenes/no-picture.png" >
+                <div class="media-body">
+                <h5 class="mt-0 mb-1">${data.val().Tipo}</h5>
+                ${data.val().Comentario} | ${data.val().Estatus}
+                </div>
+            </li>
+            <hr/>
+            `);
+         });
 
-        setTimeout(function(){
-        let grid =  $("#gridContainer").dxDataGrid({
-                dataSource: denuncias,
-                keyExpr: "Tipo",
-                height: 550,
-                scrolling: {
-                    columnRenderingMode: "virtual"
-                },
-                columns: [
-                    {
-                        caption: "Tipo",
-                        dataField: "Tipo",
-                        width: 300
-                    },
-                    {
-                        caption: "Comentario",
-                        dataField: "Comentario"
-                    },
-                    {
-                        caption: "Estatus",
-                        dataField: "Estatus",
-                        width: 200
-                    }]
-            });//END DEVEXTREME
-        //END ANIMACION      
-        $("#animation-loading").css("display","none")
-        },2000)
-
+      $("#animation-loading").css("display","none");
     </script>
 </body>
 </html>
