@@ -28,7 +28,9 @@ p{
     z-index:1;
     color: #1F671F;
 }
-
+.navbar-light .navbar-text a{
+    color: rgba(0,0,0,.5) !important;
+}
 /* width */
 ::-webkit-scrollbar {
     width: 10px;
@@ -48,3 +50,5 @@ p{
 ::-webkit-scrollbar-thumb:hover {
     background: #555; 
 }
+
+

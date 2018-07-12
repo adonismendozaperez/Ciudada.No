@@ -46,7 +46,9 @@
             .list-unstyled:hover{
                 overflow-y: auto;
             }
-
+            .blockquote-footer{
+                color:silver;
+            }
     </style>
 </head>
 
@@ -117,7 +119,10 @@
                 <img class="rounded float-left img-list" src="Imagenes/no-picture.png" >
                 <div class="media-body">
                 <h5 class="mt-0 mb-1">${data.val().Tipo}</h5>
-                ${data.val().Comentario} | ${data.val().Estatus}
+                ${data.val().Comentario}
+                <blockquote class="blockquote mb-0">
+                <footer class="blockquote-footer font-weight-light">${data.val().Estatus}</footer>
+                </blockquote>
                 </div>
             </li>
             <hr/>
