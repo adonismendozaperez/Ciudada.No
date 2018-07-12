@@ -124,30 +124,35 @@
         }
 
     $("#btnEnviarProblematica").click(()=>{
+        let d = new Date();
+        let n = d.valueOf();
+        
         if($("#inputComentario").val() !== ""){
-         let tipo =      $("#inputTipoProblematica").val();
-         let fecha =     new Date(Date.now()).toLocaleString();
-         let longitud =  $("#inputLogintud").text();
-         let latitud =   $("#inputLatitud").text();
-         let comentario =$("#inputComentario").val();
-         let estatus =   "Pendiente";
-         let userName =  firebase.auth().currentUser;
+         let Tipo =      $("#inputTipoProblematica").val();
+         let Fecha =     new Date(Date.now()).toLocaleString();
+         let Longitud =  $("#inputLogintud").text();
+         let Latitud =   $("#inputLatitud").text();
+         let Comentario =$("#inputComentario").val();
+         let Estatus =   "Pendiente";
+         let UserName =  firebase.auth().currentUser;
+         let DenunciaID = n;
+         
+          let obj = {
+              Tipo,
+              Fecha,
+              Longitud,
+              Latitud,
+              Comentario,
+              Estatus,
+              UserName: UserName.email,
+              DenunciaID
+           }
 
-         let obj = {
-             Tipo : tipo,
-             Fecha : fecha,
-             Longitud : longitud,
-             Latitud : latitud,
-             Comentario : comentario,
-             Estatus : estatus,
-             UserName: userName.email
-          }
-
-          firebase.database().ref("Problematicas").push(obj);
-          swal("Guardado!", "Datos Guardados correctamente!", "success");
-          $("#inputTipoProblematica").val("");
-          $("#inputFecha").val("");
-          $("#inputComentario").val("");
+           firebase.database().ref("Problematicas/"+n).set(obj);
+           swal("Guardado!", "Datos Guardados correctamente!", "success");
+           $("#inputTipoProblematica").val("");
+           $("#inputFecha").val("");
+           $("#inputComentario").val("");
         }
         else{
             swal("Alerta!", "Debe rellenar todos los campos correctamente!", "warning");

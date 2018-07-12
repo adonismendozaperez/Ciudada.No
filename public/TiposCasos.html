@@ -68,11 +68,9 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="TiposCasos.html">Tipos casos</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="MensajesAdmin.html">Mensajes</a>
-                </li>
             </ul>
             <span class="navbar-text" id="UserName" >
+                    | <a href="MensajesAdmin.html"><i class="far fa-envelope"></i> Mensajes</a>  |
                     <button class="btn btn-outline-success my-2 my-sm-0 btnSalir"  style="margin-left: 10px;" type="submit">Salir</button>
             </span>
         </div>
@@ -120,7 +118,7 @@
     firebase.database().ref('TiposCasos').orderByChild("Fecha").on('child_added',function(data){
         $(".list-unstyled").append(`
             <li class="media" style="color:silver;">
-                <div class="media-body">${data.val().Caso}</div>
+                <div class="media-body"><i class="far fa-file-alt"></i> ${data.val().Caso}</div>
             </li>
             <hr/>
         `);
