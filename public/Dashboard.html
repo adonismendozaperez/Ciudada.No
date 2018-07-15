@@ -25,7 +25,16 @@
     </script>
      <link rel="stylesheet" type="text/css" media="screen" href="css/global.css" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="Dashboard.js"></script>
+    <script src="main.js"></script>
+    <style>
+        /*  BOTON SALIR */
+        .btnSalir{
+            cursor: pointer !important;
+        }
+        .btnSalir:hover{
+            color: red !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -53,7 +62,7 @@
             </ul>
             <span class="navbar-text" id="UserName" >
                     |  <a href="MyCuenta.html"><i class="fas fa-user-cog"></i> Mi Cuenta</a>  
-                    <button class="btn btn-outline-success my-2 my-sm-0 btnSalir"  style="margin-left: 10px;" type="submit">Salir</button>
+                    | <span class="btnSalir"><i class="fas fa-sign-out-alt"></i> Salir</span>
             </span>
         </div>
     </nav>
@@ -100,65 +109,5 @@
     </div>
 
     <div id="section2" class="container-fluid"></div>
-
-    <script>
-     //SESION   
-     firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-           let us = firebase.auth().currentUser;
-           $("#UserName").prepend(`<i class="far fa-user"></i> ${us.email}`);
-        } else {
-          location.href = 'index.html';
-        }
-      });
-
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(mostrarCoordenada);
-        } else {
-            alert('El navegador no dispone la capacidad de geolocalización');
-        }
-
-        function mostrarCoordenada(posicion) {
-            $("#inputLogintud").text(posicion.coords.longitude);
-            $("#inputLatitud").text(posicion.coords.latitude);
-        }
-
-    $("#btnEnviarProblematica").click(()=>{
-        let d = new Date();
-        let n = d.valueOf();
-        
-        if($("#inputComentario").val() !== ""){
-         let Tipo =      $("#inputTipoProblematica").val();
-         let Fecha =     new Date(Date.now()).toLocaleString();
-         let Longitud =  $("#inputLogintud").text();
-         let Latitud =   $("#inputLatitud").text();
-         let Comentario =$("#inputComentario").val();
-         let Estatus =   "Pendiente";
-         let UserName =  firebase.auth().currentUser;
-         let DenunciaID = n;
-         
-          let obj = {
-              Tipo,
-              Fecha,
-              Longitud,
-              Latitud,
-              Comentario,
-              Estatus,
-              UserName: UserName.email,
-              DenunciaID
-           }
-
-           firebase.database().ref("Problematicas/"+n).set(obj);
-           swal("Guardado!", "Datos Guardados correctamente!", "success");
-           $("#inputTipoProblematica").val("");
-           $("#inputFecha").val("");
-           $("#inputComentario").val("");
-        }
-        else{
-            swal("Alerta!", "Debe rellenar todos los campos correctamente!", "warning");
-        }
-         
-    });
-    </script>
 </body>
 </html>

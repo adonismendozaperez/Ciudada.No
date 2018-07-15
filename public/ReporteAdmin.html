@@ -26,11 +26,18 @@
     </script>
      <link rel="stylesheet" type="text/css" media="screen" href="css/global.css" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="Dashboard.js"></script>
+    <script src="main.js"></script>
     <style>
         #chart-area{
             width: 1000px !important;
             height: 450px !important; 
+        }
+        /*  BOTON SALIR */
+        .btnSalir{
+           cursor: pointer !important;
+        }
+        .btnSalir:hover{
+            color: red !important;
         }
     </style>
 </head>
@@ -57,7 +64,7 @@
             </ul>
             <span class="navbar-text" id="UserName" >
                     | <a href="MensajesAdmin.html"><i class="far fa-envelope"></i> Mensajes</a>  |
-                    <button class="btn btn-outline-success my-2 my-sm-0 btnSalir"  style="margin-left: 10px;" type="submit">Salir</button>
+                    <span class="btnSalir"><i class="fas fa-sign-out-alt"></i> Salir</span>
             </span>
         </div>
     </nav>
@@ -77,124 +84,5 @@
         </div>
         
     </div>
-
-    <script>
-     //SESION   
-     firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-           let us = firebase.auth().currentUser;
-           $("#UserName").prepend(`<i class="far fa-user"></i> ${us.email}`);
-        } else {
-          location.href = 'index.html';
-        }
-      });
-
-
-    //CONF GRAFICO  
-    var config = {
-          type: 'pie',
-          data: {
-            datasets: [{
-              data: [
-                10,
-                20,
-                30,
-                40,
-                50,
-                60,
-                70
-              ],
-              backgroundColor: [
-                '#FF0000',
-                '#00FF00',
-                '#36A2EB',
-                '#FFCE56',
-                '#4BC0C0',
-                '#9966FF'
-              ],
-              label: 'El grafico del futuro'
-            }],
-            labels: [
-              'Bullying',
-              'Contaminacion',
-              'Delincuencia',
-              'Electricidad',
-              'Racismo',
-              'Violencia de Genero',
-              'Otros'
-            ]
-          },
-          options: {
-            responsive: true
-          }
-        };
-        
-       
-        let conteoBullying = 0;
-        let conteoContaminacion = 0;
-        let conteoDelincuencia = 0;
-        let conteoElectricidad = 0;
-        let conteoRacismo = 0;
-        let conteoViolenciaGenero = 0;
-        let conteoOtros = 0;
-
-        let starCountRef = firebase.database().ref('Problematicas');
-        starCountRef.on('value', function(snapshot) {
-        datos = snapshot.val();
-        console.log(datos)
-        
-        for(let d in datos){
-            
-            if(datos[d].Tipo === "Bullying"){
-                conteoBullying++;
-            }
-            else if(datos[d].Tipo === "Contaminación"){
-                conteoContaminacion++;
-            }
-            else if(datos[d].Tipo === "Delincuencia"){
-                conteoDelincuencia++;
-            }
-            else if(datos[d].Tipo === "Electricidad"){
-                conteoElectricidad ++;
-            }
-            else if(datos[d].Tipo === "Racismo"){
-                conteoRacismo++;
-            }
-            else if(datos[d].Tipo === "Violencia de Genero"){
-                conteoViolenciaGenero++;
-            }
-            else{
-                conteoOtros++;
-            }
-        }
-        
-        
-        //SET DATA  
-        config.data.datasets[0].data[0] = conteoBullying;
-        config.data.datasets[0].data[1] = conteoContaminacion;
-        config.data.datasets[0].data[2] = conteoDelincuencia;
-        config.data.datasets[0].data[3] = conteoElectricidad;
-        config.data.datasets[0].data[4] = conteoRacismo;
-        config.data.datasets[0].data[5] = conteoViolenciaGenero;
-        config.data.datasets[0].data[6] = conteoOtros;
-        window.myPie.update();
-        
-        // for(k in datos){
-        //     letra = k.toUpperCase();
-        //     document.getElementById('txt'+letra).value = datos[k];
-        // }
-        console.log(`Total de Bullying: ${conteoBullying}`)
-        console.log(`Total de Contaminacion: ${conteoContaminacion}`)
-        console.log(`Total de Delincuencia: ${conteoDelincuencia}`)
-        console.log(`Total de Electricidad: ${conteoElectricidad}`);
-        console.log(`Total de Racismo: ${conteoRacismo}`)
-        console.log(`Total de Violencia de genero: ${conteoViolenciaGenero}`)
-        console.log(`Total de Otros: ${conteoOtros}`)
-        });
-
-        
-        var ctx = document.getElementById('chart-area').getContext('2d');
-        window.myPie = new Chart(ctx, config);
-    </script>
 </body>
 </html>

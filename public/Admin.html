@@ -23,11 +23,11 @@
         };
         firebase.initializeApp(config);
     </script>
-     <link rel="stylesheet" type="text/css" media="screen" href="css/global.css" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="Dashboard.js"></script>
+    <script src="main.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <style>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/global.css" />
+   <style>
         .container-body{
             position: relative;
             top: 20px;
@@ -53,6 +53,13 @@
         .btn {
             float: right;
             margin: 0 10px 0 0;
+        }
+        /*  BOTON SALIR */
+        .btnSalir{
+            cursor: pointer !important;
+        }
+        .btnSalir:hover{
+            color: red !important;
         }
     </style>
 
@@ -80,7 +87,7 @@
             </ul>
             <span class="navbar-text" id="UserName" >
                    | <a href="MensajesAdmin.html"><i class="far fa-envelope"></i> Mensajes</a>  |
-                    <button class="btn btn-outline-success my-2 my-sm-0 btnSalir"  style="margin-left: 10px;" type="submit">Salir</button>
+                   <span class="btnSalir"><i class="fas fa-sign-out-alt"></i> Salir</span>
             </span>
         </div>
     </nav>
@@ -136,75 +143,6 @@
             </div>
           </div>
 
-
-
     <div id="section2" class="container-fluid"></div>
-    <script>
-     //SESION   
-     let ID;
-
-     firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-           let us = firebase.auth().currentUser;
-           $("#UserName").prepend(`<i class="far fa-user"></i> ${us.email}`);
-        } else {
-          location.href = 'index.html';
-        }
-      });
-     
-      //GET-DENUNCIAS
-      firebase.database().ref('Problematicas').orderByChild("Fecha").on('child_added',function(data){
-            $(".list-unstyled").append(`
-                <li class="media" style="color:silver;">
-                    <img class="rounded float-left img-list" src="Imagenes/doc.svg" >
-                    <div class="media-body">
-                    <button type="button" class="btn btn-light btn-event" data-toggle="modal" data-DenunciaID="${data.val().DenunciaID}" data-target="#exampleModal"><i class="far fa-edit"></i></button>
-                    <h5 class="mt-0 mb-1">${data.val().Tipo}</h5>
-                    ${data.val().Comentario}
-                    <blockquote class="blockquote mb-0">
-                    <footer class="blockquote-footer font-weight-light">${data.val().Estatus}</footer>
-                    </blockquote>
-                    </div>
-                </li>
-            <hr/>
-            `);
-
-         });
-
-       setTimeout(()=>{
-        $(".btn-event").click(function(){
-             ID = $(this).attr("data-DenunciaID");
-
-            var Entry = firebase.database().ref('Problematicas').child("/"+ID);
-            Entry.once('value', function (r) { 
-                $("#InputTipo").val(r.val().Tipo)
-                $("#InputComentario").val(r.val().Comentario)
-                $("#InputUsuario").val(r.val().UserName)
-                $("#InputEstatus").val(r.val().Estatus)
-            });
-         });
-
-         $("#btn-guardar").click(function(){           
-            let obj = {
-                Estatus : $("#InputEstatus").val(),
-            }
-
-            firebase.database().ref("Problematicas/"+ID).update(obj);
-            
-            //DELETE INPUTS
-            $("#InputTipo").val("")
-            $("#InputComentario").val("")
-            $("#InputUsuario").val("")
-            $("#InputEstatus").val("")
-           
-            swal("Guardado!", "Datos Guardados correctamente!", "success");
-            $(".close").click()
-         });
-
-       },2000)
-
-      
-
-    </script>
 </body>
 </html>

@@ -25,7 +25,7 @@
     </script>
      <link rel="stylesheet" type="text/css" media="screen" href="css/global.css" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="Dashboard.js"></script>
+    <script src="main.js"></script>
     
     <style>
     .col-sm{
@@ -62,6 +62,13 @@
             .blockquote-footer{
                 color:silver;
             }
+               /*  BOTON SALIR */
+            .btnSalir{
+                cursor: pointer !important;
+            }
+            .btnSalir:hover{
+                color: red !important;
+            }
     </style>
 </head>
 <body>
@@ -91,8 +98,8 @@
                 </li>
             </ul>
             <span class="navbar-text" id="UserName" >
-                        |  <a href="MyCuenta.html"><i class="fas fa-user-cog"></i> Mi Cuenta</a>  
-                    <button class="btn btn-outline-success my-2 my-sm-0 btnSalir"  style="margin-left: 10px;" type="submit">Salir</button>
+            |  <a href="MyCuenta.html"><i class="fas fa-user-cog"></i> Mi Cuenta</a>  
+            | <span class="btnSalir"><i class="fas fa-sign-out-alt"></i> Salir</span>
             </span>
         </div>
     </nav>
@@ -121,56 +128,5 @@
     </div>
 
     <div id="section2" class="container-fluid"></div>
-
-    <script>
-     //SESION  
-     firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-           let us = firebase.auth().currentUser;
-           $("#UserName").prepend(`<i class="far fa-user"></i> ${us.email}`);
-            
-            //TABLA MIS DENUNCIAS
-            firebase.database().ref('Problematicas').orderByChild("UserName").startAt(`${us.email}`).endAt(`${us.email}`).limitToLast(3).on('child_added',function(data){
-
-                $(".list-unstyled").append(`
-                <li class="media" style="color:silver;">
-                    <img class="rounded float-left img-list" src="Imagenes/doc.svg" >
-                    <div class="media-body">
-                    <h5 class="mt-0 mb-1">${data.val().Tipo}</h5>
-                    ${data.val().Comentario}
-                    <blockquote class="blockquote mb-0">
-                    <footer class="blockquote-footer font-weight-light">${data.val().Estatus}</footer>
-                    </blockquote>
-                    </div>
-                </li>
-                <hr/>
-                `);
-
-            });
-        } else {
-          location.href = 'index.html';
-        }
-      });
-       
-      
-        //END ANIMACION      
-        $("#animation-loading").css("display","none")
-
-
-      $(".btnCambiarPassword").click((e)=>{
-          e.preventDefault();
-         let user = firebase.auth().currentUser;
-         //CAMBIAR PASSWORD
-         let newPassword = $("#InputPassword").val();
-
-         user.updatePassword(newPassword).then(function() {
-            swal("Listo!", "La contraseña fue cambiada correctamente!", "success");
-         }).catch(function(error) {
-            let errorMessage = error.message;
-            swal("Información!", errorMessage, "warning");
-         });
-      });
-     
-    </script>
 </body>
 </html>

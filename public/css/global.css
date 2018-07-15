@@ -19,6 +19,7 @@ label, h4{
 p{
     color: black;
 }
+
 #animation-loading{
     display: flex;
     position: fixed;
