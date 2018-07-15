@@ -16,7 +16,6 @@
         .then(()=>{
             $("#LoginInputEmail").val("");
             $("#LoginInputPassword").val("");
-            debugger;
             if(user === "adonis.mendoza@outlook.com"){
                 location.href = 'Admin.html';
             }

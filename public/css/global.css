@@ -1,14 +1,13 @@
 #section1 {
     padding-top: 50px;
-    height: 687px;
     color: #fff;
     background-color: white;
 }
-#section2 {
-    padding-top: 50px;
-    height: 70px;
-    color: #fff;
-    background-color: #1f671f;
+.bg-light{
+    background-color: #1f671f !important;
+}
+.nav-link, .navbar-text, a{
+    color: white !important;
 }
 label, h4{
     color: rgba(0,0,0,.5);
@@ -19,7 +18,10 @@ label, h4{
 p{
     color: black;
 }
-
+.titulo{
+    font-size: 1.8rem;
+    font-weight: 400;
+}
 #animation-loading{
     display: flex;
     position: fixed;
@@ -30,7 +32,7 @@ p{
     color: #1F671F;
 }
 .navbar-light .navbar-text a{
-    color: rgba(0,0,0,.5) !important;
+    color: white !important;
 }
 /* width */
 ::-webkit-scrollbar {

@@ -79,6 +79,11 @@ function PagDashboard(){
         $(".custom-file-label").text($("#customFile").val())
     });  
 
+    firebase.database().ref("TiposCasos").on('child_added',function(data){
+        $("#inputTipoProblematica").append(`<option>${data.val().Caso}</option>`)
+    });
+    
+
     //SET PROBLEMATICA
     $("#btnEnviarProblematica").click(()=>{
         let d = new Date();
