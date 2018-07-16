@@ -10,6 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <script>
             // Initialize Firebase
             var config = {
@@ -24,14 +25,13 @@
         </script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <style>
-        #section1 {padding-top:50px;height:493px;color: #fff; background-color: white;}
-        #section2 {padding-top:50px;height:118px;color: #fff; background-color: #1f671f;}
+        body, #section1 {padding-top:50px;height:493px;color: #fff; background-color: #ECEFF1;}
         .navbar{
-            background-color: white;
+            background-color: #ECEFF1;
         }
         a{
             color: white;
-            background-color: #1f671f;
+            background-color: #508e50;
         }
         a:hover{
             color: white;
@@ -40,7 +40,7 @@
 </head>
 <body>
     <div class="text-center mt-3">
-            <img src="Imagenes/ciudada.no-icono.png" style="width: 200px;" class="rounded" alt="...">
+            <i class="fab fa-earlybirds" style="font-size: 200px; color: #508e50;"></i>
     </div>
     <!-- CONTAINER -->
     <div id="section1" class="container-fluid">
@@ -66,7 +66,7 @@
                                     <div class="form-group">
                                         <input type="password" class="form-control" id="LoginInputPassword" placeholder="Ingrese su contraseña">
                                     </div>
-                                    <button type="submit" class="btn btnIniciarSesion" style="background-color: #1f671f; color: white">Iniciar Sesión</button>
+                                    <button type="submit" class="btn btnIniciarSesion" style="background-color: #508e50; color: white">Iniciar Sesión</button>
                                 </form>
                         </div>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -77,23 +77,15 @@
                                 <div class="form-group">
                                     <input type="password" class="form-control" id="RegistroInputPassword" placeholder="Ingrese su contraseña">
                                 </div>
-                                <button type="submit" class="btn btnCrear" style="background-color: #1f671f; color: white">Crear</button>
+                                <button type="submit" class="btn btnCrear" style="background-color: #508e50; color: white">Crear</button>
                             </form>
                         </div>
                 </div>
             </div>
 
             <div class="col-sm"></div>
-        </div>
-
-
-
-
-        
+        </div>        
     </div>
-
-    <div id="section2" class="container-fluid">
-    </div> 
     <script src="Login.js"></script>
 </body>
 </html>
