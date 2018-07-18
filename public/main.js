@@ -75,8 +75,20 @@ function PagDashboard(){
     //GET GEOLOCALITATION
     geolocalizacion();
     //GET NAME FILE
-    $("#customFile").change(()=>{
+    let Image;
+    let Metadata;
+    let extension;
+    let name;
+    $("#customFile").change((e)=>{
         $(".custom-file-label").text($("#customFile").val())
+        //GET NAME AND EXTENSION OF FILE    
+        name = e.currentTarget.files[0].name.substring(0, e.currentTarget.files[0].name.lastIndexOf("."));
+        extension  = e.currentTarget.files[0].name.substring(e.currentTarget.files[0].name.lastIndexOf(".") + 1);
+
+        Image = e.currentTarget.files[0];
+        Metadata = {
+            contentType : e.currentTarget.files[0].type
+        }
     });  
 
     firebase.database().ref("TiposCasos").on('child_added',function(data){
@@ -90,6 +102,10 @@ function PagDashboard(){
         let n = d.valueOf();
         
         if($("#inputComentario").val() !== ""){
+             //GetName file
+            let dt = new Date().valueOf();
+            let uploadImage = firebase.storage().ref().child(`Problematicas/${name + dt + "." + extension}`).put(Image, Metadata);
+
             let Tipo =      $("#inputTipoProblematica").val();
             let Fecha =     new Date(Date.now()).toLocaleString();
             let Longitud =  $("#inputLogintud").text();
@@ -98,6 +114,7 @@ function PagDashboard(){
             let Estatus =   "Pendiente";
             let UserName =  firebase.auth().currentUser;
             let DenunciaID = n;
+            let Evidencias = "";
             
             let obj = {
                 Tipo,
@@ -107,14 +124,33 @@ function PagDashboard(){
                 Comentario,
                 Estatus,
                 UserName: UserName.email,
-                DenunciaID
+                DenunciaID,
+                Evidencias
+            }
+            //SET DATA TO DATABASE
+            firebase.database().ref("Problematicas/"+n).set(obj);
+            // IF CHECKING FILE EXISTS
+            if($(".custom-file-label").text() !== ""){
+                //LOAD DATA IN STORAGE FIREBASE
+                uploadImage.on('state_changed',function(){},
+                    function(error){
+                    console.log(error);
+                    },function(){
+                    uploadImage.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                        let obj = {
+                            Evidencias : downloadURL,
+                        }
+                        firebase.database().ref("Problematicas/"+n).update(obj);
+                    });
+                });
             }
 
-            firebase.database().ref("Problematicas/"+n).set(obj);
+
             swal("Guardado!", "Datos Guardados correctamente!", "success");
             $("#inputTipoProblematica").val("");
             $("#inputFecha").val("");
             $("#inputComentario").val("");
+            $(".custom-file-label").text("")
         }
         else{
             swal("Alerta!", "Debe rellenar todos los campos correctamente!", "warning");
