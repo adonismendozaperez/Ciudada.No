@@ -343,6 +343,14 @@ function AdminPage(){
               $("#InputComentario").val(r.val().Comentario)
               $("#InputUsuario").val(r.val().UserName)
               $("#InputEstatus").val(r.val().Estatus)
+              if(r.val().Evidencias === "" || r.val().Evidencias === undefined ){
+                $("#divEvidencia").html("");
+                $("#divEvidencia").append(`<label>No hay evidencias!</label>`);    
+                }
+                else{
+                    $("#divEvidencia").html("");
+                    $("#divEvidencia").append(`<img src="${r.val().Evidencias}" height="150" width="150" />`);  
+                }
           });
        });
 
