@@ -203,7 +203,15 @@ function DenunciasPage(){
             $("#InputComentario").val(r.val().Comentario)
             $("#InputUsuario").val(r.val().UserName)
             $("#InputFecha").val(r.val().Fecha)
-            $("#InputEstatus").val(r.val().Estatus) 
+            $("#InputEstatus").val(r.val().Estatus)
+            if(r.val().Evidencias === "" || r.val().Evidencias === undefined ){
+                $("#divEvidencia").html("");
+                $("#divEvidencia").append(`<label>No hay evidencias!</label>`);    
+            }
+            else{
+                $("#divEvidencia").html("");
+                $("#divEvidencia").append(`<img src="${r.val().Evidencias}" height="150" width="150" />`);  
+            }
         });
      });
    },2000);
