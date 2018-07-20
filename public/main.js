@@ -51,6 +51,10 @@ function inicio() {
         VerificarSesion();
         MensajesAdminPage();
     }
+    else if(document.location.pathname === "/Slider.html"){
+        VerificarSesion();
+        sliderPage();
+    }
     else{
         console.log("Not found")
     }
@@ -526,5 +530,63 @@ function MensajesAdminPage(){
             </li>
         <hr/>
         `);
+    });
+}
+
+function sliderPage(){
+    let Image;
+    let Metadata;
+    let extension;
+    let name;
+    $("#customFile").change((e)=>{
+        $(".custom-file-label").text($("#customFile").val())
+        //GET NAME AND EXTENSION OF FILE    
+        name = e.currentTarget.files[0].name.substring(0, e.currentTarget.files[0].name.lastIndexOf("."));
+        extension  = e.currentTarget.files[0].name.substring(e.currentTarget.files[0].name.lastIndexOf(".") + 1);
+
+        Image = e.currentTarget.files[0];
+        Metadata = {
+            contentType : e.currentTarget.files[0].type
+        }
+    });  
+    //SET PROBLEMATICA
+    $("#btnEnviarProblematica").click(()=>{
+          // IF CHECKING FILE EXISTS
+          if($(".custom-file-label").text() !== ""){
+            let n = new Date().valueOf();
+        
+
+             //GetName file
+            let dt = new Date().valueOf();
+            let uploadImage = firebase.storage().ref().child(`slider/${name + dt + "." + extension}`).put(Image, Metadata);
+
+            let DenunciaID = n;
+            let slider = "";
+            
+            let obj = {
+                DenunciaID,
+                slider
+            }
+            //SET DATA TO DATABASE
+            firebase.database().ref("Sliders/"+n).set(obj);
+          
+                //LOAD DATA IN STORAGE FIREBASE
+                uploadImage.on('state_changed',function(){},
+                    function(error){
+                    console.log(error);
+                    },function(){
+                    uploadImage.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                        let obj = {
+                            slider : downloadURL,
+                        }
+                        firebase.database().ref("Sliders/"+n).update(obj);
+                    });
+                });
+            }
+
+
+            swal("Guardado!", "Datos Guardados correctamente!", "success");
+            $(".custom-file-label").text("")
+         
     });
 }

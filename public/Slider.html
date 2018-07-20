@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Dashboard | Ciudada.No</title>
+    <title>Slider | Ciudada.No</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -16,35 +16,13 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="main.js"></script>
     <style>
-        .container-body{
-                position: relative;
-                top: 20px;
-            }
-            .img-list{
-                height: 50px;
-                width: 57px;
-            }
-            .media-body{
-                left: 10px;
-                position: relative;
-            }
-            .list-unstyled{
-                height: 250px;
-                overflow: hidden;
-            }
-            .list-unstyled:hover{
-                overflow-y: auto;
-            }
-            .blockquote-footer{
-                color:silver;
-            }
-            /*  BOTON SALIR */
-            .btnSalir{
-                cursor: pointer !important;
-            }
-            .btnSalir:hover{
-                color: red !important;
-            }
+        /*  BOTON SALIR */
+        .btnSalir{
+            cursor: pointer !important;
+        }
+        .btnSalir:hover{
+            color: red !important;
+        }
     </style>
 </head>
 
@@ -58,18 +36,18 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item ">
-                    <a class="nav-link" href="Admin.html">Inicio</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="TiposCasos.html">Tipos casos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="ReporteAdmin.html">Reporte</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="Slider.html">Slider</a>
-                </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="Admin.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="TiposCasos.html">Tipos casos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ReporteAdmin.html">Reporte</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Slider.html">Slider</a>
+                    </li>
             </ul>
             <span class="navbar-text" id="UserName" >
                     | <a href="MensajesAdmin.html"><i class="far fa-envelope"></i> Mensajes</a>  |
@@ -82,28 +60,21 @@
         <div class="row">
             <div class="col-sm"></div>
             <div class="col-sm">
-                    <h4 class="titulo">Tipos de casos.</h4>
+                    <h4 class="titulo">Agregar Slider.</h4>
                 <form>
-                    <div class="form-group">
-                        <label for="inputCaso">Casos</label>
-                        <input type="text" class="form-control" id="inputCaso">
+                    <!--INPUT EVIDENCIAS-->
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input"  accept="image/*" id="customFile">
+                        <label class="custom-file-label" ></label>
                     </div>
                     <!--INPUT ENVIAR-->
                     <div class="form-group mt-3">
-                        <button type="button" class="btn btn-secondary btn-lg btn-block" id="btGuardar">Guardar</button>
+                        <button type="button" class="btn btn-secondary btn-lg btn-block" id="btnEnviarProblematica">Guardar</button>
                     </div>
                 </form>
-                <!--GRID-->
-                <div class="demo-container mt-3">
-                    <div class="container-body">
-                        <ul class="list-unstyled"></ul>
-                    </div>
-                </div>
             </div>
             <div class="col-sm"></div>
         </div>    
     </div>
-
-    <div id="section2" class="container-fluid"></div>
 </body>
 </html>
