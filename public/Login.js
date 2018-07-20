@@ -16,6 +16,8 @@
         .then(()=>{
             $("#LoginInputEmail").val("");
             $("#LoginInputPassword").val("");
+            localStorage.setItem("UserName",user)
+            
             if(user === "adonis.mendoza@outlook.com"){
                 location.href = 'Admin.html';
             }

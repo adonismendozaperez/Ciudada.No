@@ -5,6 +5,7 @@ function inicio() {
     $(".btnSalir").click(()=>{
         firebase.auth().signOut().then(function() {
             location.href = 'index.html';
+            localStorage.removeItem('UserName')
         }).catch(function(error) {
             alert(error);
         });
@@ -66,7 +67,7 @@ function VerificarSesion(){
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             let us = firebase.auth().currentUser;
-            $("#UserName").prepend(`<i class="far fa-user"></i> ${us.email}`);
+            $("#UserName").prepend(`<i class="far fa-user"></i> ${localStorage.getItem('UserName')}`);
         } else {
             location.href = 'index.html';
         }
@@ -94,6 +95,7 @@ function PagDashboard(){
             contentType : e.currentTarget.files[0].type
         }
     });  
+
 
     firebase.database().ref("TiposCasos").on('child_added',function(data){
         $("#inputTipoProblematica").append(`<option>${data.val().Caso}</option>`)
@@ -278,7 +280,7 @@ function MyCuentaPage(){
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
            let us = firebase.auth().currentUser;
-           $("#UserName").prepend(`<i class="far fa-user"></i> ${us.email}`);
+           $("#UserName").prepend(`<i class="far fa-user"></i> ${localStorage.getItem('UserName')}`);
             
             //TABLA MIS DENUNCIAS
             firebase.database().ref('Problematicas').orderByChild("UserName").startAt(`${us.email}`).endAt(`${us.email}`).limitToLast(3).on('child_added',function(data){
