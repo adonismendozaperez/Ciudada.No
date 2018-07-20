@@ -149,7 +149,6 @@ function PagDashboard(){
                 });
             }
 
-
             swal("Guardado!", "Datos Guardados correctamente!", "success");
             $("#inputTipoProblematica").val("");
             $("#inputFecha").val("");
@@ -179,6 +178,14 @@ function geolocalizacion(){
 }
 //PAG DENUNCIAS
 function DenunciasPage(){
+    firebase.database().ref('Sliders').on('child_added',function(data){
+        $("#carousel-inner").append(`
+        <div class="carousel-item">
+            <img class="d-block w-100"  height="300" src="${data.val().slider}" alt="slide">
+        </div>
+        `)
+     });
+  
     firebase.database().ref('Problematicas').orderByChild("Fecha").limitToLast(15).on('child_added',function(data){
         $(".list-unstyled").append(`
         <li class="media" style="color:silver;">
@@ -500,13 +507,13 @@ function ReportePage(){
           config.data.datasets[0].data[6] = conteoOtros;
           window.myPie.update();
   
-          console.log(`Total de Bullying: ${conteoBullying}`)
-          console.log(`Total de Contaminacion: ${conteoContaminacion}`)
-          console.log(`Total de Delincuencia: ${conteoDelincuencia}`)
-          console.log(`Total de Electricidad: ${conteoElectricidad}`);
-          console.log(`Total de Racismo: ${conteoRacismo}`)
-          console.log(`Total de Violencia de genero: ${conteoViolenciaGenero}`)
-          console.log(`Total de Otros: ${conteoOtros}`)
+        //   console.log(`Total de Bullying: ${conteoBullying}`)
+        //   console.log(`Total de Contaminacion: ${conteoContaminacion}`)
+        //   console.log(`Total de Delincuencia: ${conteoDelincuencia}`)
+        //   console.log(`Total de Electricidad: ${conteoElectricidad}`);
+        //   console.log(`Total de Racismo: ${conteoRacismo}`)
+        //   console.log(`Total de Violencia de genero: ${conteoViolenciaGenero}`)
+        //   console.log(`Total de Otros: ${conteoOtros}`)
           });
   
           
@@ -583,7 +590,6 @@ function sliderPage(){
                     });
                 });
             }
-
 
             swal("Guardado!", "Datos Guardados correctamente!", "success");
             $(".custom-file-label").text("")
