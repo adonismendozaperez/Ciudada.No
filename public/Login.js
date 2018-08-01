@@ -10,6 +10,11 @@
         e.preventDefault();
         Login($("#LoginInputEmail").val(), $("#LoginInputPassword").val());
     });
+
+    $(".btnIniciarSesionGoogle").click(function(e){
+        e.preventDefault();
+        GoogleAuth();
+    })
     
     function Login(user,pass){
         firebase.auth().signInWithEmailAndPassword(user, pass)
@@ -106,6 +111,25 @@
                     button: "Okey!",
                     });
                 }
+        });
+    }
+
+    function GoogleAuth (){
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+            localStorage.setItem("UserName",result.user.email)
+            location.href = "Dashboard.html";
+          }).catch(function(error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            var email = error.email;
+            var credential = error.credential;
+            swal({
+                title: "Error!",
+                text: errorMessage,
+                icon: "warning",
+                button: "Okey!",
+            });
         });
     }
 
