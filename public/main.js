@@ -298,8 +298,25 @@ function MyCuentaPage(){
                 </li>
                 <hr/>
                 `);
-
             });
+
+            //TABLA MIS DENUNCIAS
+            firebase.database().ref('MsjAdmin').on('child_added',function(data){
+
+            $(".list-unstyled-message").append(`
+            <li class="media" style="color:silver;">
+                <div class="media-body">
+                <h5 class="mt-0 mb-1">${data.val().Titulo}</h5>
+                ${data.val().Contenido}
+                <blockquote class="blockquote mb-0">
+                <footer class="blockquote-footer font-weight-light">${data.val().Fecha}</footer>
+                </blockquote>
+                </div>
+            </li>
+            <hr/>
+            `);
+
+        });
         } else {
           location.href = 'index.html';
         }
