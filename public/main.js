@@ -180,14 +180,6 @@ function geolocalizacion(){
 }
 //PAG DENUNCIAS
 function DenunciasPage(){
-    firebase.database().ref('Sliders').on('child_added',function(data){
-        $("#carousel-inner").append(`
-        <div class="carousel-item">
-            <img class="d-block w-100"  height="300" src="${data.val().slider}" alt="slide">
-        </div>
-        `)
-     });
-  
     firebase.database().ref('Problematicas').orderByChild("Fecha").limitToLast(15).on('child_added',function(data){
         $(".list-unstyled").append(`
         <li class="media" style="color:silver;">
@@ -204,7 +196,6 @@ function DenunciasPage(){
         <hr/>
         `);
      });
-
      
    setTimeout(()=>{
     $(".btn-event").click(function(){
@@ -228,7 +219,6 @@ function DenunciasPage(){
         });
      });
    },2000);
-
 
   $("#animation-loading").css("display","none");
 }
