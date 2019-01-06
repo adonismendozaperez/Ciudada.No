@@ -7,7 +7,11 @@
         var provider = new firebase.auth.GoogleAuthProvider();
         firebase.auth().signInWithPopup(provider).then(function(result) {
             localStorage.setItem("UserName",result.user.email)
-            location.href = "Dashboard.html";
+            if(result.user.email === "adonis.stephler@gmail.com"){
+                location.href = 'Admin.html';
+            }else{
+                location.href = "Dashboard.html";
+            }
           }).catch(function(error) {
             var errorMessage = error.message;
             var email = error.email;
