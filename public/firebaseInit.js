@@ -1,12 +1,12 @@
 (function (){
     // Initialize Firebase
     var config = {
-        apiKey: "AIzaSyAphHJJBP2HpPNynnQgZ66GkAr23wtLEiA",
+        apiKey: "",
         authDomain: "ciudada-no.firebaseapp.com",
         databaseURL: "https://ciudada-no.firebaseio.com",
         projectId: "ciudada-no",
         storageBucket: "ciudada-no.appspot.com",
-        messagingSenderId: "896456539633"
+        messagingSenderId: ""
     };
     firebase.initializeApp(config);
 })()
