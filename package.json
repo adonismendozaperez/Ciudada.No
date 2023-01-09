@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/adonismendozaperez/Ciudada.No#readme",
   "dependencies": {
-    "firebase-admin": "^6.4.0",
-    "firebase-functions": "^2.1.0"
+    "firebase-admin": "^11.4.1",
+    "firebase-functions": "^4.1.1"
   }
 }
